@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include "boost/format.hpp"
+#include "boost/algorithm/string.hpp"
 
 std::string getAsChar(double a);
 std::string getAsChar(int a);

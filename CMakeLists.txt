@@ -10,7 +10,7 @@ set( CMAKE_CXX_STANDARD 17 )
 
 set( CMAKE_GENERATOR ${CXX_LOC})
 
-set( LOGGER_FILES Logger.cxx )
+set( LOGGER_FILES LoggerGlobal.cxx Logger.cxx )
 
 add_executable( ${PROJECT_NAME} ${LOGGER_FILES} )
 target_link_libraries(${PROJECT_NAME} ${LIBS} )
