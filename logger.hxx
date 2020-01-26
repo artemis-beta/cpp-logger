@@ -1,7 +1,7 @@
-#ifndef __PKLOGGER__
-#define __PKLOGGER__
+#ifndef __LOGGER__
+#define __LOGGER__
 
-#include "PKGlobalDef.hxx"
+#include "LoggerGlobal.hxx"
 #include <iostream>
 #include <string>
 #include <sstream>
