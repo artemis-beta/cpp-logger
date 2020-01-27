@@ -5,13 +5,11 @@ execute_process(COMMAND which g++
 
 set( BOOST $ENV{BOOSTINCLUDE} )
 project( Logger )
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c")
 set( CMAKE_CXX_STANDARD 17 )
 
 set( CMAKE_GENERATOR ${CXX_LOC})
 
 set( LOGGER_FILES LoggerGlobal.cxx Logger.cxx )
 
-add_executable( ${PROJECT_NAME} ${LOGGER_FILES} )
-target_link_libraries(${PROJECT_NAME} ${LIBS} )
+add_library( ${PROJECT_NAME} ${LOGGER_FILES} )
 target_include_directories( ${PROJECT_NAME} PUBLIC ${BOOST} )
