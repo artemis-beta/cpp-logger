@@ -13,4 +13,5 @@ set( CMAKE_GENERATOR ${CXX_LOC})
 set( LOGGER_FILES LoggerGlobal.cxx Logger.cxx )
 
 add_library( ${PROJECT_NAME} ${LOGGER_FILES} )
-target_include_directories( ${PROJECT_NAME} PUBLIC ${BOOST_INCLUDE_DIRS} )
+target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES} )
+target_include_directories( ${PROJECT_NAME} PUBLIC ${Boost_INCLUDE_DIRS} )
