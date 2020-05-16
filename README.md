@@ -8,7 +8,7 @@ There are six levels of logging: `Fatal`, `Critical`, `Error`, `Warning`, `Info`
 
 ```
 Logger my_logger;
-Logger.Info("Running operation on value '%1%'", my_val); // Arguments are represented using %var%
+my_logger.Info("Running operation on value '%1%'", my_val); // Arguments are represented using %var%
 ...
-Logger.Error("Failed to complete operation");
+my_logger.Error("Failed to complete operation");
 ```
