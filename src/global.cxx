@@ -1,36 +1,38 @@
 #include "cpplogger/global.hxx"
 
-Level _global_logger_level = WARNING;
-
-void setLoggerLevel( std::string level_str )
+void cpplogger::setGlobalLogLevel( const std::string& level_str )
 { 
     if( level_str == "INFO" )
     {
-        _global_logger_level = INFO;
+        global_logger_level_ = cpplogger::Level::INFO;
     }
     else if( level_str == "DEBUG" )
     {
-        _global_logger_level = DEBUG;
+        global_logger_level_ = cpplogger::Level::DEBUG;
     }
     else if( level_str == "WARNING" )
     {
-        _global_logger_level = WARNING;
+        global_logger_level_ = cpplogger::Level::WARNING;
     }
     else if( level_str == "ERROR" )
     {
-        _global_logger_level = ERROR; 
+        global_logger_level_ = cpplogger::Level::ERROR; 
     }
     else if( level_str == "FATAL" )
     {
-        _global_logger_level = FATAL;
+        global_logger_level_ = cpplogger::Level::FATAL;
     }
     else if( level_str == "CRITICAL" )
     {
-        _global_logger_level = CRITICAL;
+        global_logger_level_ = cpplogger::Level::CRITICAL;
     }
     else
     {
         std::cout << "Invalid logger level option '" << level_str << "'\n";
         std::cout << ". Using default." << std::endl;
     }
+}
+
+void cpplogger::setGlobalLogLevel( const Level& level ) {
+    global_logger_level_ = level;
 }

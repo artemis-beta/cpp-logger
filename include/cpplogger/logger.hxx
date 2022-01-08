@@ -5,32 +5,29 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "boost/format.hpp"
-#include "boost/algorithm/string.hpp"
 
-std::string getAsChar(double a);
-std::string getAsChar(int a);
-std::string getAsChar(float a);
-std::string getAsChar(std::string a);
+namespace cpplogger {
 
 class Logger
 {
     private:
-        std::string _logger_name;
+        std::string logger_name_;
+        Level log_level_;
+        bool level_override_ = false;
+        const std::string tag_ = "%s";
+        void _global_out(const Level& type, const std::string& type_str, const std::string& logger_name_, const std::string& msg, const std::vector<std::string>& vars);
     public:
-        Logger( std::string );
-        void Error( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
-        void Warning( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
-        void Info( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
-        void Debug( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
-        void Critical( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
-        void Fatal( std::string msg, std::string a="", std::string b="", std::string c="",
-                    std::string d="", std::string e="", std::string f="", std::string g="" );
+        explicit Logger( const std::string_view& name ) : logger_name_(name ) { log_level_ = global_logger_level_; };
+        void Error( const std::string& msg, const std::vector<std::string>& );
+        void Warning( const std::string& msg, const std::vector<std::string>& );
+        void Info( const std::string& msg, const std::vector<std::string>& );
+        void Debug( const std::string& msg, const std::vector<std::string>& );
+        void Critical( const std::string& msg, const std::vector<std::string>& );
+        void Fatal( const std::string& msg, const std::vector<std::string>& );
+        void setLogLevel( const Level& level ) { log_level_ = level; level_override_ = true; }
+        Level getLogLevel() const { return log_level_; }
+};
+
 };
 
 #endif

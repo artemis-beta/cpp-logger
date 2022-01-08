@@ -3,9 +3,12 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
-enum Level
-{
+
+namespace cpplogger {
+
+enum class Level {
     DEBUG,
     INFO,
     WARNING,
@@ -14,8 +17,11 @@ enum Level
     FATAL
 };
 
-extern Level _global_logger_level;
+inline Level global_logger_level_ = cpplogger::Level::WARNING;
 
-void setLoggerLevel( std::string level_str );
+void setGlobalLogLevel( const std::string& level_str );
+void setGlobalLogLevel( const Level& level );
+
+};
 
 #endif

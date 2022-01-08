@@ -1,63 +1,62 @@
 #include "cpplogger/logger.hxx"
 
-Logger::Logger( std::string name )
+void cpplogger::Logger::_global_out(const Level& type, const std::string& type_str, const std::string& logger_name, const std::string& msg, const std::vector<std::string>& vars)
 {
-    _logger_name = name;
+    // If user has not manually set level for this logger, update
+    // to global log level before printing (in case it has been changed)
+    if(!level_override_) {
+        log_level_ = global_logger_level_;
+    }
 
-}
+    int n_filled_ = 0;
 
-void _global_out(Level type, std::string type_str, std::string _logger_name, std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g)
-{
-    if(a == ""){msg += "%1%";}
-    if(b == ""){msg += "%2%";}
-    if(c == ""){msg += "%3%";}
-    if(d == ""){msg += "%4%";}
-    if(e == ""){msg += "%5%";}
-    if(f == ""){msg += "%6%";}
-    if(g == ""){msg += "%7%";}
+    std::string out_msg_ = msg;
+
+    size_t tag_found_ = msg.find(tag_);
+
+    while(tag_found_ != std::string::npos) {
+        if(n_filled_ > vars.size()) {
+            throw std::invalid_argument("Number of std::vector<std::string> does not match number of tags in log statement");
+        }
+        out_msg_.replace(tag_found_, tag_.size(), vars[n_filled_]);
+        n_filled_ += 1;
+        tag_found_ = msg.find(tag_, tag_found_+1);
+    }
     
-    if( type >= _global_logger_level )
+    if( type >= log_level_ )
     {
-	std::string msg_w_args = boost::str(boost::format(msg) % a % b % c % d % e % f % g);
-        std::cout << _logger_name;
+        std::cout << logger_name;
         std::cout << ":\t" << type_str << ":\t";
-        std::cout << msg_w_args << std::endl;
+        std::cout << out_msg_ << std::endl;
     }
 }
 
-void Logger::Error( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Error( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( ERROR, "ERROR", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::ERROR, "ERROR", logger_name_, msg, vars );
 }
 
-void Logger::Warning( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Warning( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( WARNING, "WARNING", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::WARNING, "WARNING", logger_name_, msg, vars );
 }
 
-void Logger::Info( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Info( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( INFO, "INFO", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::INFO, "INFO", logger_name_, msg, vars );
 }
 
-void Logger::Critical( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Critical( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( CRITICAL, "CRITICAL", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::CRITICAL, "CRITICAL", logger_name_, msg, vars );
 }
 
-void Logger::Fatal( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Fatal( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( FATAL, "FATAL", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::FATAL, "FATAL", logger_name_, msg, vars );
 }
 
-void Logger::Debug( std::string msg, std::string a, std::string b, std::string c,
-                    std::string d, std::string e, std::string f, std::string g )
+void cpplogger::Logger::Debug( const std::string& msg, const std::vector<std::string>& vars )
 {
-    _global_out( DEBUG, "DEBUG", _logger_name, msg, a, b, c, d, e, f, g );
+    _global_out( cpplogger::Level::DEBUG, "DEBUG", logger_name_, msg, vars );
 }
