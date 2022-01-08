@@ -1,7 +1,7 @@
 #ifndef __LOGGER__
 #define __LOGGER__
 
-#include "LoggerGlobal.hxx"
+#include "cpplogger/global.hxx"
 #include <iostream>
 #include <string>
 #include <sstream>

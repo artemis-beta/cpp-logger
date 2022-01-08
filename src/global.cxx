@@ -1,4 +1,4 @@
-#include "LoggerGlobal.hxx"
+#include "cpplogger/global.hxx"
 
 Level _global_logger_level = WARNING;
 
